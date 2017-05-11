@@ -45,5 +45,6 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.getui:sdk:2.10.2.0'
     //    compile 'com.daivp:umpushsdk:1.0.1'
-    compile project(':PushLibrary')
+//    compile project(':PushLibrary')
+    compile 'com.github.ddaitest:push_library_android:v0.1.0'
 }
