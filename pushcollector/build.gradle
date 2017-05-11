@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId 'com.daivp.pushcollector'
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionName '1.1'
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "Pch3EpJM1AAm8PQUoVefSA",
+                GETUI_APP_KEY   : "W8VFMontYp6NqclaB3UQJA",
+                GETUI_APP_SECRET: "vUvVLTNEEE6kuUXljli9v9"
+        ]
+        ndk {
+            abiFilters "armeabi"
+        }
+        versionCode 11
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+}
+
+repositories { flatDir { dirs project(':PushLibrary').file('libs') }
+
+}
+//repositories { flatDir { dirs 'libs' } }
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.getui:sdk:2.10.2.0'
+    //    compile 'com.daivp:umpushsdk:1.0.1'
+    compile project(':PushLibrary')
+}
