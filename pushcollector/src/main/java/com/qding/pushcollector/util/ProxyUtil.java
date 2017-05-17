@@ -9,6 +9,7 @@ import android.text.TextUtils;
 //import org.apache.http.conn.params.ConnRoutePNames;
 
 import com.qding.pushcollector.MainActivity;
+import com.qding.pushcollector.MyApplication;
 
 import java.net.InetSocketAddress;
 
@@ -54,7 +55,7 @@ public class ProxyUtil {
 
 	public static java.net.Proxy getProxy() {
 		// tmp code, just for demo.
-		Context context = MainActivity.context();
+		Context context = MyApplication.getContext();
 		ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

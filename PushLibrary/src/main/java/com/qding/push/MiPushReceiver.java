@@ -1,4 +1,4 @@
-package com.qding.pushcollector.push;
+package com.qding.push;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -34,7 +34,10 @@ public class MiPushReceiver extends PushMessageReceiver {
         mMessage = message.getContent();
         String log = "{title:"+message.getTitle()+";content:"+mMessage+";extra:"+message.getExtra()+"}";
         Log.e("DDAI_MI", "on Payload = "+log);
-        UpdateHandler.updateContent(2,"{"+mMessage+"}");
+//        UpdateHandler.updateContent(2,"{"+mMessage+"}");
+        for (PushListener listener:PushManager.pushListeners){
+            listener.onMessage(Constants.OS_MI,"{"+mMessage+"}");
+        }
         if(!TextUtils.isEmpty(message.getTopic())) {
             mTopic=message.getTopic();
         } else if(!TextUtils.isEmpty(message.getAlias())) {
@@ -48,7 +51,11 @@ public class MiPushReceiver extends PushMessageReceiver {
         mMessage = message.getContent();
         String log = "{title:"+message.getTitle()+";content:"+mMessage+";extra:"+message.getExtra()+"}";
         Log.e("DDAI_MI", "on Notification Clicked = "+log);
-        UpdateHandler.updateContent(2,"{"+message.getTitle()+";"+mMessage+";"+message.getExtra()+"}");
+        Util.callActivity(context,"notify_mi",mMessage+message.getExtra().get("notify_mi"));
+//        UpdateHandler.updateContent(2,"{"+message.getTitle()+";"+mMessage+";"+message.getExtra()+"}");
+        for (PushListener listener:PushManager.pushListeners){
+            listener.onMessage(Constants.OS_MI,"{"+message.getTitle()+";"+mMessage+";"+message.getExtra()+"}");
+        }
         if(!TextUtils.isEmpty(message.getTopic())) {
             mTopic=message.getTopic();
         } else if(!TextUtils.isEmpty(message.getAlias())) {
@@ -115,9 +122,12 @@ public class MiPushReceiver extends PushMessageReceiver {
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mRegId = cmdArg1;
-                UpdateHandler.updateStatus(2,"Connected");
+                for (PushListener listener:PushManager.pushListeners){
+                    listener.updateStatus(Constants.OS_MI,"Connected");
+                }
+//                UpdateHandler.updateStatus(2,"Connected");
 //                UpdateHandler.updateContent(2,"{token:"+mRegId+"}");
-                UpdateHandler.updateToken(2,mRegId);
+//                UpdateHandler.updateToken(2,mRegId);
             }
         }
     }

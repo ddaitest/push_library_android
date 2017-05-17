@@ -3,7 +3,8 @@ package com.qding.pushcollector;
 import android.annotation.SuppressLint;
 import android.app.Application;
 
-import com.qding.pushcollector.push.UmengManager;
+import com.qding.push.PushManager;
+import com.qding.push.UmengManager;
 import com.qding.pushcollector.push.XXX;
 
 /**
@@ -19,9 +20,10 @@ public class MyApplication extends Application {
         app = this;
         super.onCreate();
         XXX.test1(this);
-        if (XXX.check(this, "com.daivp.pushcollector:channel")) {
-            UmengManager.init(this);
-        }
+//        if (XXX.check(this, "com.daivp.pushcollector:channel")) {
+//            UmengManager.init(this);
+//        }
+        PushManager.init(this);
     }
 
     public static Application getContext() {

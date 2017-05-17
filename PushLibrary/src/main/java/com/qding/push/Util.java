@@ -1,7 +1,10 @@
 package com.qding.push;
 
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -18,6 +21,7 @@ public class Util {
 
     /**
      * Find OS info, Determine which system belong to.
+     *
      * @param context application context.
      * @return One of {@link Constants#OS_HUAWEI},{@link Constants#OS_MI}, or {@link Constants#OS_OTHER}
      */
@@ -43,7 +47,8 @@ public class Util {
 
     /**
      * check current process, return True if exist in given processNames.
-     * @param context application context.
+     *
+     * @param context      application context.
      * @param processNames filters.
      * @return True if exist in given processNames.
      */
@@ -64,5 +69,14 @@ public class Util {
             Log.w("DDAI_MAN", myInfo == null ? "TEST ERROR" : "PROCESS NAME: " + myInfo.processName + "; PID:" + myInfo.pid + "; s=" + s);
         }
         return s >= 0;
+    }
+
+    public static void callActivity(Context context, String key, String value) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("QDPUSH://com.qding.push/parser"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(key, value);
+        String intentUri = intent.toUri(Intent.URI_INTENT_SCHEME);
+        Log.e("DDAI_URI", intentUri);
+        context.getApplicationContext().startActivity(intent);
     }
 }

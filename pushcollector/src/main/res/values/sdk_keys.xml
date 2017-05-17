@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Hua Wei-->
+    <string name="push_hw_app_id">10883659</string>
+    <!--UMeng-->
+    <string name="push_um_app_key">58ede1c6c62dca1bff0006b1</string>
+    <string name="push_um_app_secret">d0e530a7722a400288b7c260372c69b1</string>
+    <!-- MI -->
+    <string name="push_mi_app_id">2882303761517568046</string>
+    <string name="push_mi_app_key">5661756891046</string>
+</resources>
