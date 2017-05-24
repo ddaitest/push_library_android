@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.qding.push.Constants;
 import com.qding.push.PushListener;
 import com.qding.push.PushManager;
+import com.qding.push.TokenListener;
 import com.qding.pushcollector.util.HttpUtil;
 
 import java.io.IOException;
@@ -31,28 +32,28 @@ public class UpdateHandler {
     private static SparseArray<LinkedList<String>> contents = new SparseArray<>();
     private static Handler handler;
     private static ProgressBar bar;
-    private static PushListener listener;
 
     public static void init() {
         if (handler == null) {
             handler = new Handler(Looper.getMainLooper());
-            listener = new PushListener() {
+
+            PushManager.regTokenListener(new TokenListener() {
+                @Override
+                public void gotToken(@Constants.OSType int type, String token) {
+                    UpdateHandler.updateToken(type, token);
+                }
+            });
+            PushManager.regMessageListener(new PushListener() {
                 @Override
                 public void updateStatus(int type, String text) {
                     UpdateHandler.updateStatus(type, text);
                 }
 
                 @Override
-                public void gotToken(int type, String token) {
-                    UpdateHandler.updateToken(type, token);
-                }
-
-                @Override
                 public void onMessage(int type, String content) {
                     UpdateHandler.updateContent(type, content);
                 }
-            };
-            PushManager.reglistener(listener);
+            });
         }
     }
 

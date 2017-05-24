@@ -7,10 +7,6 @@ import com.qding.push.PushManager;
 import com.qding.push.UmengManager;
 import com.qding.pushcollector.push.XXX;
 
-/**
- * Created by qdhl on 2017/4/21.
- */
-
 public class MyApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Application app;
@@ -19,10 +15,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         app = this;
         super.onCreate();
-        XXX.test1(this);
-//        if (XXX.check(this, "com.daivp.pushcollector:channel")) {
-//            UmengManager.init(this);
-//        }
         PushManager.init(this);
     }
 

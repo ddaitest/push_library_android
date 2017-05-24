@@ -1,5 +1,6 @@
 package com.qding.pushcollector;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,7 +22,9 @@ import android.widget.Toast;
 
 import com.daivp.pushcollector.R;
 import com.qding.push.Constants;
+import com.qding.push.PushListener;
 import com.qding.push.PushManager;
+import com.qding.push.TokenListener;
 import com.qding.pushcollector.push.GTManager;
 import com.qding.push.HuaweiManager;
 import com.qding.push.MiManager;
@@ -33,7 +36,7 @@ import com.qding.pushcollector.util.HttpUtil;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     public static Context context;
     //
     TextView tv1, tv2, tv3, tv4;
@@ -45,30 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         context = getApplicationContext();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                PushManager.touch(getApplicationContext());
-//                UmengManager.init(getApplication());
-//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//                intent.putExtra("ABC", "aaa123");
-//                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
-//                builder.setSmallIcon(R.mipmap.ic_launcher).setContentText("CCCCC").setContentTitle("TTT").setContentIntent(pendingIntent);
-//                notificationManager.notify(1, builder.build());
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("QDPUSH://com.qding.push/parser"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("abc","000");
-                String intentUri = intent.toUri(Intent.URI_INTENT_SCHEME);
-                Log.e("DDAI_URI",intentUri);
-                startActivity(intent);
-            }
-        });
         et1 = (EditText) findViewById(R.id.et_1);
         et2 = (EditText) findViewById(R.id.et_2);
         et4 = (EditText) findViewById(R.id.et_4);
@@ -77,27 +57,22 @@ public class MainActivity extends AppCompatActivity {
         tv4 = (TextView) findViewById(R.id.tv_4);
         bar = (ProgressBar) findViewById(R.id.progressBar);
         etIntent = (EditText) findViewById(R.id.et_intent);
-        //init push sdk
         UpdateHandler.init();
-//        HuaweiManager.init(this);
-//        MiManager.init(this);
-        PushManager.start(this);
-//        GTManager.init(this);
-//        XGManager.init();
+
+
+        //init push sdk
+        PushManager.onCreate(this, new TokenListener() {
+            @Override
+            public void gotToken(@Constants.OSType int type, String token) {
+
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        HuaweiManager.connect(this);
-        UmengManager.onStart();
-        Intent intent = getIntent();
-        if (intent != null) {
-            String abc = intent.getStringExtra("ABC");
-            if (!TextUtils.isEmpty(abc)) {
-                etIntent.setText(etIntent.getText().append(abc + ";"));
-            }
-        }
+        PushManager.onStart(this);
     }
 
     @Override
