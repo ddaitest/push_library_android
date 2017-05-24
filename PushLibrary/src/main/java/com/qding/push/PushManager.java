@@ -34,7 +34,7 @@ public class PushManager {
         }
     }
 
-    public static void start(Activity context, TokenListener listener) {
+    public static void onCreate(Activity context, TokenListener listener) {
         regTokenListener(listener);
         OS = Util.checkOS(context);
         if (OS == Constants.OS_HUAWEI) {
@@ -44,6 +44,13 @@ public class PushManager {
             // active MI
             MiManager.init(context);
         }
+    }
+
+    public static void onStart(Activity context) {
+        if (OS == Constants.OS_HUAWEI) {
+            HuaweiManager.connect(context);
+        }
+        UmengManager.onStart();
     }
 
 
