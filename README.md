@@ -1,6 +1,28 @@
 # push_library_android
 include Huawei, Mi and UMeng Push SDK.  Choose the right one according to the device.
 
+
+## setup
+1. modify build.gradle
+https://jitpack.io/#ddaitest/push_library_android/
+
+2. modify manifest.xml
+
+add part 1
+
+```
+    <permission
+        android:name="com.daivp.pushcollector.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.daivp.pushcollector.permission.MIPUSH_RECEIVE" />
+```
+
+
+3. 接受push intent
+
+
+
 ## keep setting
 
 ### MI
