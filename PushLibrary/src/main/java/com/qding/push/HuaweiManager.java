@@ -45,9 +45,9 @@ public class HuaweiManager {
         public void onConnected() {
             Log.e("DDAI_HUAWEI", "ConnectionCallbacks.onConnected()");
 //            UpdateHandler.updateStatus(1,"Connected");
-            for (PushListener listener:PushManager.pushListeners){
-                listener.updateStatus(Constants.OS_HUAWEI,"Connected");
-            }
+//            for (PushListener listener:PushManager.pushListeners){
+//                listener.updateStatus(Constants.OS_HUAWEI,"Connected");
+//            }
             getToken();
         }
 
@@ -55,9 +55,9 @@ public class HuaweiManager {
         public void onConnectionSuspended(int i) {
             Log.e("DDAI_HUAWEI", "ConnectionCallbacks.onConnectionSuspended(i=" + i + ")");
 //            UpdateHandler.updateStatus(1,"ConnectionSuspended:"+i);
-            for (PushListener listener:PushManager.pushListeners){
-                listener.updateStatus(Constants.OS_HUAWEI,"ConnectionSuspended");
-            }
+//            for (PushListener listener:PushManager.pushListeners){
+//                listener.updateStatus(Constants.OS_HUAWEI,"ConnectionSuspended");
+//            }
         }
     };
 

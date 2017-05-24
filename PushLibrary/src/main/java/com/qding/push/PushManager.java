@@ -2,7 +2,7 @@ package com.qding.push;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 
@@ -11,32 +11,109 @@ import java.util.ArrayList;
  */
 
 public class PushManager {
+    private static String tokenOther;
+    private static String tokenHuawei;
+    private static String tokenMi;
+    private final static String ERROR = "ERROR";
+
+    @Constants.OSType
+    private static int OS = Constants.OS_OTHER;
+
+    //message
+    private static ArrayList<PushListener> pushListeners = new ArrayList<>();
+    //token
+    private static ArrayList<TokenListener> tokenListeners = new ArrayList<>();
 
     public static void init(Application context) {
         // decide kind of os.
-        if (Util.checkProcess(context, context.getPackageName(), Constants.PROCESS_CHANNEL)) {
+        String packageName = context.getPackageName();
+        if (Util.checkProcess(context, packageName, packageName + Constants.PROCESS_CHANNEL)) {
             // init UM.
             UmengManager.init(context);
 
         }
     }
 
-    public static void start(Activity context) {
-        int type = Util.checkOS(context);
-        if (type == Constants.OS_HUAWEI) {
+    public static void start(Activity context, TokenListener listener) {
+        regTokenListener(listener);
+        OS = Util.checkOS(context);
+        if (OS == Constants.OS_HUAWEI) {
             //active hw
             HuaweiManager.init(context);
-        } else if (type == Constants.OS_MI) {
+        } else if (OS == Constants.OS_MI) {
             // active MI
             MiManager.init(context);
         }
     }
 
-    static ArrayList<PushListener> pushListeners = new ArrayList<>();
 
-    public static void reglistener(PushListener listener) {
-        if (!pushListeners.contains(listener)) {
+    public static void regMessageListener(PushListener listener) {
+        if ((listener != null) && (!pushListeners.contains(listener))) {
             pushListeners.add(listener);
+        }
+    }
+
+    public static void regTokenListener(TokenListener listener) {
+        if ((listener != null) && (!tokenListeners.contains(listener))) {
+            tokenListeners.add(listener);
+        }
+    }
+
+
+    static void gotToken(@Constants.OSType int type, String token) {
+        if (TextUtils.isEmpty(token)) {
+            token = ERROR;
+        }
+        if (type == Constants.OS_OTHER) {
+            tokenOther = token;
+        } else if (type == Constants.OS_HUAWEI) {
+            tokenHuawei = token;
+        } else if (type == Constants.OS_MI) {
+            tokenMi = token;
+        }
+        checkToken();
+    }
+
+    private static void checkToken() {
+        //default value
+        @Constants.OSType
+        int type = Constants.OS_OTHER;
+        String token = tokenOther;
+        if (OS == Constants.OS_HUAWEI) {
+            if (!TextUtils.isEmpty(tokenHuawei)) {
+                if (ERROR.equals(tokenHuawei)) {
+                    // other
+                    type = Constants.OS_OTHER;
+                    token = tokenOther;
+                } else if (!TextUtils.isEmpty(tokenOther)) {
+                    // hauwei
+                    type = Constants.OS_HUAWEI;
+                    token = tokenHuawei;
+                }
+            }
+        } else if (OS == Constants.OS_MI) {
+            if (!TextUtils.isEmpty(tokenMi)) {
+                if (ERROR.equals(tokenMi)) {
+                    // other
+                    type = Constants.OS_OTHER;
+                    token = tokenOther;
+                } else if (!TextUtils.isEmpty(tokenOther)) {
+                    // MI
+                    type = Constants.OS_MI;
+                    token = tokenMi;
+                }
+            }
+        } else {
+            if (!TextUtils.isEmpty(tokenOther)) {
+                // other
+                type = Constants.OS_OTHER;
+                token = tokenOther;
+            }
+        }
+        if (tokenListeners != null && !ERROR.equals(token)) {
+            for (TokenListener listener : tokenListeners) {
+                listener.gotToken(type, token);
+            }
         }
     }
 

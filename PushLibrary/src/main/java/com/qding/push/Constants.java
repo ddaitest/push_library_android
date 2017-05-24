@@ -15,7 +15,7 @@ public class Constants {
     public static final String OS_KEY_HUAWEI = "ro.build.version.emui";
     public static final String OS_KEY_MIUI = "ro.miui.ui.version.name";
 
-    public static final String PROCESS_CHANNEL= "com.daivp.pushcollector:channel";
+    public static final String PROCESS_CHANNEL= ":channel";
 
     public static final int OS_HUAWEI = 1;
     public static final int OS_MI = 2;

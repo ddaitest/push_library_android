@@ -20,9 +20,7 @@ public class HuaweiPushReceiver extends PushReceiver {
         System.out.println(content);
         Log.e("DDAI_HUAWEI_", content);
 //        UpdateHandler.updateToken(1,token);
-        for (PushListener listener:PushManager.pushListeners){
-            listener.gotToken(1,token);
-        }
+        PushManager.gotToken(Constants.OS_HUAWEI, token);
     }
 
     @Override
@@ -31,9 +29,9 @@ public class HuaweiPushReceiver extends PushReceiver {
             String text = new String(msg, "UTF-8");
             Log.e("DDAI_HUAWEI", "PushReceiver:onPushMsg： " + text);
 //            UpdateHandler.updateContent(1,"{"+text+"}");
-            for (PushListener listener:PushManager.pushListeners){
-                listener.onMessage(Constants.OS_HUAWEI,"{"+text+"}");
-            }
+//            for (PushListener listener : PushManager.pushListeners) {
+//                listener.onMessage(Constants.OS_HUAWEI, "{" + text + "}");
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,9 +49,9 @@ public class HuaweiPushReceiver extends PushReceiver {
             String content = "PushReceiver:onEvent: " + extras.getString(BOUND_KEY.pushMsgKey);
             Log.e("DDAI_HUAWEI", content);
 //            UpdateHandler.updateContent(1,content);
-            for (PushListener listener:PushManager.pushListeners){
-                listener.onMessage(Constants.OS_HUAWEI,content);
-            }
+//            for (PushListener listener : PushManager.pushListeners) {
+//                listener.onMessage(Constants.OS_HUAWEI, content);
+//            }
         }
         super.onEvent(context, event, extras);
     }
@@ -64,9 +62,9 @@ public class HuaweiPushReceiver extends PushReceiver {
             String content = "PushReceiver:onPushState： " + (pushState ? "Connected" : "Disconnected");
             Log.e("DDAI_HUAWEI", content);
 //            UpdateHandler.updateStatus(1,(pushState ? "_Connected" : "_Disconnected"));
-            for (PushListener listener:PushManager.pushListeners){
-                listener.updateStatus(Constants.OS_HUAWEI,(pushState ? "_Connected" : "_Disconnected"));
-            }
+//            for (PushListener listener : PushManager.pushListeners) {
+//                listener.updateStatus(Constants.OS_HUAWEI, (pushState ? "_Connected" : "_Disconnected"));
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

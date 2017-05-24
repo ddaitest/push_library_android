@@ -30,19 +30,21 @@ public class UmengManager {
 //                UpdateHandler.updateStatus(4,"Connected");
 //                UpdateHandler.updateContent(4,"{token:"+deviceToken+"}");
 //                UpdateHandler.updateToken(4,deviceToken);
-                for (PushListener listener:PushManager.pushListeners){
-                    listener.updateStatus(Constants.OS_OTHER,"Connected");
-                }
+//                for (PushListener listener:PushManager.pushListeners){
+//                    listener.updateStatus(Constants.OS_OTHER,"Connected");
+//                }
+                PushManager.gotToken(Constants.OS_OTHER,deviceToken);
             }
 
             @Override
             public void onFailure(String s, String s1) {
                 Log.e("DDAI_Umeng","register.onFailure()="+s+";"+s1);
+                PushManager.gotToken(Constants.OS_OTHER,"");
 //                UpdateHandler.updateStatus(4,"Failure");
 //                UpdateHandler.updateContent(4,"{onFailure:"+s1+"}");
-                for (PushListener listener:PushManager.pushListeners){
-                    listener.updateStatus(Constants.OS_OTHER,"Failure");
-                }
+//                for (PushListener listener:PushManager.pushListeners){
+//                    listener.updateStatus(Constants.OS_OTHER,"Failure");
+//                }
             }
         });
         UmengMessageHandler messageHandler = new UmengMessageHandler(){
@@ -51,9 +53,9 @@ public class UmengManager {
                 String log = "{title:"+msg.title+";content:"+msg.text+";extra:"+msg.custom+"}";
                 Log.e("DDAI_Umeng", "dealWithCustomMessage = "+log);
 //                UpdateHandler.updateContent(4,"{"+msg.title+";"+msg.text+";"+msg.custom+"}");
-                for (PushListener listener:PushManager.pushListeners){
-                    listener.onMessage(Constants.OS_OTHER,"{"+msg.title+";"+msg.text+";"+msg.custom+"}");
-                }
+//                for (PushListener listener:PushManager.pushListeners){
+//                    listener.onMessage(Constants.OS_OTHER,"{"+msg.title+";"+msg.text+";"+msg.custom+"}");
+//                }
             }
         };
         mPushAgent.setMessageHandler(messageHandler);

@@ -8,7 +8,5 @@ public interface PushListener {
 
     void updateStatus(int type, String text);
 
-    void gotToken(int type, String token);
-
     void onMessage(int type, String content);
 }
