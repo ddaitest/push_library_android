@@ -125,7 +125,7 @@ replace ==com.xxx.xxx== to your packagename.
 replace ==com.xxx.xxx== to your packagename.
 modify app infos.
 
-```
+```XML
 <!-- Hua wei setting -->
         <meta-data
             android:name="com.huawei.hms.client.appid"
