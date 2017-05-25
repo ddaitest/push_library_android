@@ -78,8 +78,11 @@ public class HuaweiManager {
                     public void onUpdateFailed(@NonNull ConnectionResult connectionResult) {
                         Log.e("DDAI_HUAWEI", "OonUpdateFailed=" + connectionResult.getErrorCode());
 //                        UpdateHandler.updateStatus(1,"UpdateFailed:"+connectionResult.getErrorCode());
+                        PushManager.gotToken(Constants.OS_HUAWEI, "");
                     }
                 });
+            } else {
+                PushManager.gotToken(Constants.OS_HUAWEI, "");
             }
         }
     };
