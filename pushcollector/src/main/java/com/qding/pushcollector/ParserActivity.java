@@ -35,22 +35,22 @@ public class ParserActivity extends Activity {
         Intent intent = getIntent();
         if (intent != null) {
             StringBuilder builder = new StringBuilder();
-            String abc = intent.getStringExtra("notify_hw");
-            if (!TextUtils.isEmpty(abc)) {
+            String message = intent.getStringExtra("notify_hw");
+            if (!TextUtils.isEmpty(message)) {
                 builder.append("notify_hw=");
-                builder.append(abc);
+                builder.append(message);
                 builder.append(";");
             }
-            abc = intent.getStringExtra("notify_mi");
-            if (!TextUtils.isEmpty(abc)) {
+            message = intent.getStringExtra("notify_mi");
+            if (!TextUtils.isEmpty(message)) {
                 builder.append("notify_mi=");
-                builder.append(abc);
+                builder.append(message);
                 builder.append(";");
             }
-            abc = intent.getStringExtra("notify_um");
-            if (!TextUtils.isEmpty(abc)) {
+            message = intent.getStringExtra("notify_um");
+            if (!TextUtils.isEmpty(message)) {
                 builder.append("notify_um=");
-                builder.append(abc);
+                builder.append(message);
                 builder.append(";");
             }
 
