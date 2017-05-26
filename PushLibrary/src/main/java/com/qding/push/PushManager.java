@@ -25,6 +25,8 @@ public class PushManager {
     //token
     private static ArrayList<TokenListener> tokenListeners = new ArrayList<>();
 
+    private static int reportTime = 1;
+
     public static void init(Application context) {
         // decide kind of os.
         String packageName = context.getPackageName();
@@ -119,7 +121,8 @@ public class PushManager {
                 token = tokenOther;
             }
         }
-        if (tokenListeners != null && !TextUtils.isEmpty(token) &&!ERROR.equals(token)) {
+        if (reportTime>0 && tokenListeners != null && !TextUtils.isEmpty(token) &&!ERROR.equals(token)) {
+            reportTime--;
             for (TokenListener listener : tokenListeners) {
                 listener.gotToken(type, token);
             }
