@@ -58,13 +58,13 @@ public class PushManager {
     }
 
 
-    public static void regMessageListener(PushListener listener) {
+    private static void regMessageListener(PushListener listener) {
         if ((listener != null) && (!pushListeners.contains(listener))) {
             pushListeners.add(listener);
         }
     }
 
-    public static void regTokenListener(TokenListener listener) {
+    private static void regTokenListener(TokenListener listener) {
         if ((listener != null) && (!tokenListeners.contains(listener))) {
             tokenListeners.add(listener);
         }
@@ -128,8 +128,8 @@ public class PushManager {
         }
     }
 
-    public static void unreglistener(PushListener listener) {
-        pushListeners.remove(listener);
+    public static void unreglistener(TokenListener listener) {
+        tokenListeners.remove(listener);
     }
 
 }
