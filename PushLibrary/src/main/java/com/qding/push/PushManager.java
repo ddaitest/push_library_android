@@ -11,10 +11,11 @@ import java.util.ArrayList;
  */
 
 public class PushManager {
-    private static String tokenOther;
-    private static String tokenHuawei;
-    private static String tokenMi;
     private final static String ERROR = "ERROR";
+
+    private static String tokenOther = ERROR;
+    private static String tokenHuawei = ERROR;
+    private static String tokenMi = ERROR;
 
     @Constants.OSType
     private static int OS = Constants.OS_OTHER;
@@ -118,7 +119,7 @@ public class PushManager {
                 token = tokenOther;
             }
         }
-        if (tokenListeners != null && !ERROR.equals(token)) {
+        if (tokenListeners != null && !TextUtils.isEmpty(token) &&!ERROR.equals(token)) {
             for (TokenListener listener : tokenListeners) {
                 listener.gotToken(type, token);
             }
