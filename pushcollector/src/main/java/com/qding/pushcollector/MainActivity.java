@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
         PushManager.onCreate(this, new TokenListener() {
             @Override
             public void gotToken(@Constants.OSType int type, String token) {
-
+                Log.e("DDAI_TOKEN","gotToken "+type+ " = "+token);
             }
         });
     }

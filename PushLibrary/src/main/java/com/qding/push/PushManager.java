@@ -121,8 +121,10 @@ public class PushManager {
                 token = tokenOther;
             }
         }
-        if (reportTime>0 && tokenListeners != null && !TextUtils.isEmpty(token) &&!ERROR.equals(token)) {
-            reportTime--;
+        if (reportTime > 0 && tokenListeners != null && !TextUtils.isEmpty(token) && !ERROR.equals(token)) {
+            if (tokenListeners.size() > 0) {
+                reportTime--;
+            }
             for (TokenListener listener : tokenListeners) {
                 listener.gotToken(type, token);
             }

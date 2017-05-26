@@ -39,9 +39,9 @@ repositories { flatDir { dirs project(':PushLibrary').file('libs') } }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //    compile 'com.daivp:umpushsdk:1.0.1'
-//    compile project(':PushLibrary')
+    compile project(':PushLibrary')
 
-    compile 'com.github.ddaitest:push_library_android:0.2.2'
+//    compile 'com.github.ddaitest:push_library_android:0.2.8'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
