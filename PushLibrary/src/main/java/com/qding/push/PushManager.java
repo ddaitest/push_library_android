@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public class PushManager {
     private final static String ERROR = "ERROR";
 
-    private static String tokenOther = ERROR;
-    private static String tokenHuawei = ERROR;
-    private static String tokenMi = ERROR;
+    private static String tokenOther;
+    private static String tokenHuawei;
+    private static String tokenMi;
 
     @Constants.OSType
     private static int OS = Constants.OS_OTHER;
@@ -25,7 +25,7 @@ public class PushManager {
     //token
     private static ArrayList<TokenListener> tokenListeners = new ArrayList<>();
 
-    private static int reportTime = 1;
+//    private static int reportTime = 1;
 
     public static void init(Application context) {
         // decide kind of os.
@@ -87,9 +87,8 @@ public class PushManager {
 
     private static void checkToken() {
         //default value
-        @Constants.OSType
-        int type = Constants.OS_OTHER;
-        String token = tokenOther;
+        int type = -1;
+        String token = null;
         if (OS == Constants.OS_HUAWEI) {
             if (!TextUtils.isEmpty(tokenHuawei)) {
                 if (ERROR.equals(tokenHuawei)) {
@@ -121,10 +120,8 @@ public class PushManager {
                 token = tokenOther;
             }
         }
-        if (reportTime > 0 && tokenListeners != null && !TextUtils.isEmpty(token) && !ERROR.equals(token)) {
-            if (tokenListeners.size() > 0) {
-                reportTime--;
-            }
+        if ( tokenListeners.size() > 0 && !TextUtils.isEmpty(token) && !ERROR.equals(token)) {
+//            reportTime--;
             for (TokenListener listener : tokenListeners) {
                 listener.gotToken(type, token);
             }
