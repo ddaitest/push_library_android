@@ -44,6 +44,7 @@ public class PushManager {
             // active MI
             MiManager.init(context);
         }
+        checkToken();
     }
 
     public static void onStart(Activity context) {
