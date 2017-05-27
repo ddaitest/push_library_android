@@ -51,7 +51,7 @@ public class MiPushReceiver extends PushMessageReceiver {
         mMessage = message.getContent();
         String log = "{title:"+message.getTitle()+";content:"+mMessage+";extra:"+message.getExtra()+"}";
         Log.e("DDAI_MI", "on Notification Clicked = "+log);
-        Util.callActivity(context,"notify_mi",mMessage+message.getExtra().get("notify_mi"));
+        Util.callActivity(context,"notify_mi",message.getExtra().get("notify_mi"));
 //        UpdateHandler.updateContent(2,"{"+message.getTitle()+";"+mMessage+";"+message.getExtra()+"}");
 //        for (PushListener listener:PushManager.pushListeners){
 //            listener.onMessage(Constants.OS_MI,"{"+message.getTitle()+";"+mMessage+";"+message.getExtra()+"}");
